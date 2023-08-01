@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Percentage Calculator</title>
   <style>
     body {
@@ -40,6 +42,19 @@
       font-size: 18px;
       margin-top: 5px;
     }
+
+    .custom-percentages {
+      margin-top: 20px;
+    }
+
+    .custom-percentages p {
+      margin: 5px;
+    }
+
+    .custom-percentages button {
+      margin-left: 5px;
+      background-color: #dc3545;
+    }
   </style>
 </head>
 
@@ -48,37 +63,65 @@
   <div class="container">
     <input type="number" id="inputNumber" placeholder="Enter a number">
     <button onclick="calculatePercentages()">Calculate</button>
+
+
+
     <div class="output">
-      <p><strong>5%:</strong> <span id="output5"></span></p>
-      <p><strong>10%:</strong> <span id="output10"></span></p>
-      <p><strong>20%:</strong> <span id="output20"></span></p>
-      <p><strong>33%:</strong> <span id="output33"></span></p>
+      <!-- Add a section for custom percentages -->
+      <div class="custom-percentages" id="customPercentages">
+        <!-- Custom percentages will be displayed here -->
+      </div>
     </div>
+
+    <!-- Allow users to input custom percentages -->
+    <label for="customPercentage">Custom Percentage:</label>
+    <input type="number" id="customPercentage" placeholder="Enter a percentage">
+    <button onclick="addCustomPercentage()">Add</button>
   </div>
 
   <script>
-    // Function to calculate all the percentages together
+    let customPercentagesArray = []; // Store custom percentages
+
     function calculatePercentages() {
-      // Get the input number
-      const inputNumber = document.getElementById('inputNumber').value;
+      updateCustomPercentages();
+    }
 
-      // Check if the input is a valid number
-      if (!isNaN(inputNumber) && inputNumber !== '') {
-        // Calculate the percentages
-        const percentage5 = (5 / 100) * inputNumber;
-        const percentage10 = (10 / 100) * inputNumber;
-        const percentage20 = (20 / 100) * inputNumber;
-        const percentage33 = (33 / 100) * inputNumber;
+    function addCustomPercentage() {
+      const customPercentage = document.getElementById('customPercentage').value;
 
-        // Display the results in the corresponding output spans
-        document.getElementById('output5').textContent = percentage5.toFixed(2);
-        document.getElementById('output10').textContent = percentage10.toFixed(2);
-        document.getElementById('output20').textContent = percentage20.toFixed(2);
-        document.getElementById('output33').textContent = percentage33.toFixed(2);
+      // Check if the custom percentage is a valid number
+      if (!isNaN(customPercentage) && customPercentage !== '') {
+        customPercentagesArray.push(customPercentage);
+
+        // Display the custom percentage in the output section
+        updateCustomPercentages();
+        calculatePercentages(); // Recalculate all percentages
+
+        // Clear the custom percentage input field
+        document.getElementById('customPercentage').value = '';
       } else {
         // If the input is not a valid number, show an error message
-        alert('Please enter a valid number.');
+        alert('Please enter a valid custom percentage.');
       }
+    }
+
+    function removeCustomPercentage(index) {
+      customPercentagesArray.splice(index, 1); // Remove the custom percentage at the specified index
+      updateCustomPercentages();
+      calculatePercentages(); // Recalculate all percentages
+    }
+
+    function updateCustomPercentages() {
+      const inputNumber = document.getElementById('inputNumber').value;
+
+      // Display custom percentages in the output section
+      const customPercentagesOutput = customPercentagesArray.map((percentage, index) => `
+        <p>
+          <strong>${percentage}%:</strong> ${(percentage / 100 * inputNumber).toFixed(2)}
+          <button onclick="removeCustomPercentage(${index})">Remove</button>
+        </p>
+      `).join('');
+      document.getElementById('customPercentages').innerHTML = customPercentagesOutput;
     }
   </script>
 </body>
