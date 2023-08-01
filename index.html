@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Percentage Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    h1 {
+      margin-top: 15px;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      margin-top: 20px;
+    }
+
+    input {
+      padding: 10px;
+      margin: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .output {
+      font-size: 18px;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Percentage Calculator</h1>
+  <div class="container">
+    <input type="number" id="inputNumber" placeholder="Enter a number">
+    <button onclick="calculatePercentages()">Calculate</button>
+    <div class="output">
+      <p><strong>5%:</strong> <span id="output5"></span></p>
+      <p><strong>10%:</strong> <span id="output10"></span></p>
+      <p><strong>20%:</strong> <span id="output20"></span></p>
+      <p><strong>33%:</strong> <span id="output33"></span></p>
+    </div>
+  </div>
+
+  <script>
+    // Function to calculate all the percentages together
+    function calculatePercentages() {
+      // Get the input number
+      const inputNumber = document.getElementById('inputNumber').value;
+
+      // Check if the input is a valid number
+      if (!isNaN(inputNumber) && inputNumber !== '') {
+        // Calculate the percentages
+        const percentage5 = (5 / 100) * inputNumber;
+        const percentage10 = (10 / 100) * inputNumber;
+        const percentage20 = (20 / 100) * inputNumber;
+        const percentage33 = (33 / 100) * inputNumber;
+
+        // Display the results in the corresponding output spans
+        document.getElementById('output5').textContent = percentage5.toFixed(2);
+        document.getElementById('output10').textContent = percentage10.toFixed(2);
+        document.getElementById('output20').textContent = percentage20.toFixed(2);
+        document.getElementById('output33').textContent = percentage33.toFixed(2);
+      } else {
+        // If the input is not a valid number, show an error message
+        alert('Please enter a valid number.');
+      }
+    }
+  </script>
+</body>
+
+</html>
